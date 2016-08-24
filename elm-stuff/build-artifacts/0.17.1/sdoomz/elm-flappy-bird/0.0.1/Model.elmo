@@ -1,0 +1,54 @@
+var _sdoomz$elm_flappy_bird$Model$Scoreboard = F6(
+	function (a, b, c, d, e, f) {
+		return {x: a, y: b, w: c, h: d, opacity: e, score: f};
+	});
+var _sdoomz$elm_flappy_bird$Model$Pipe = F5(
+	function (a, b, c, d, e) {
+		return {x: a, y: b, angle: c, w: d, h: e};
+	});
+var _sdoomz$elm_flappy_bird$Model$Model = function (a) {
+	return function (b) {
+		return function (c) {
+			return function (d) {
+				return function (e) {
+					return function (f) {
+						return function (g) {
+							return function (h) {
+								return function (i) {
+									return function (j) {
+										return function (k) {
+											return function (l) {
+												return {x: a, y: b, vy: c, gx: d, w: e, h: f, scoreBoard: g, clock: h, state: i, pipes: j, direction: k, birdPad: l};
+											};
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
+var _sdoomz$elm_flappy_bird$Model$None = {ctor: 'None'};
+var _sdoomz$elm_flappy_bird$Model$Bottom = {ctor: 'Bottom'};
+var _sdoomz$elm_flappy_bird$Model$Top = {ctor: 'Top'};
+var _sdoomz$elm_flappy_bird$Model$GameOver = {ctor: 'GameOver'};
+var _sdoomz$elm_flappy_bird$Model$Play = {ctor: 'Play'};
+var _sdoomz$elm_flappy_bird$Model$Ready = {ctor: 'Ready'};
+var _sdoomz$elm_flappy_bird$Model$initial = {
+	x: -50,
+	y: 0,
+	vy: 0,
+	gx: 0,
+	w: 480,
+	h: 570,
+	scoreBoard: A6(_sdoomz$elm_flappy_bird$Model$Scoreboard, 0, 0, 100, 100, 0, 0),
+	clock: 0,
+	state: _sdoomz$elm_flappy_bird$Model$Ready,
+	pipes: _elm_lang$core$Native_List.fromArray(
+		[]),
+	direction: _sdoomz$elm_flappy_bird$Model$Bottom,
+	birdPad: 0
+};

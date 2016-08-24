@@ -1,0 +1,16 @@
+{
+    "version": "1.0.1",
+    "summary": "Easing functions for animations.",
+    "repository": "https://github.com/elm-community/easing-functions.git",
+    "license": "BSD3",
+    "source-directories": [
+        "."
+    ],
+    "exposed-modules": [
+        "Ease"
+    ],
+    "dependencies": {
+        "elm-lang/core": "4.0.0 <= v < 5.0.0"
+    },
+    "elm-version": "0.17.0 <= v < 0.18.0"
+}

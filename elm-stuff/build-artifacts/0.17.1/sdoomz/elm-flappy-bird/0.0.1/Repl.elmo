@@ -1,0 +1,10 @@
+var _sdoomz$elm_flappy_bird$Repl$x = {
+	a: {b: 4}
+};
+var _sdoomz$elm_flappy_bird$Repl$t_s_o_l = {ctor: '_Tuple0'};
+var _sdoomz$elm_flappy_bird$Repl$n = 10;
+var _sdoomz$elm_flappy_bird$Repl$l = _elm_lang$core$Native_List.fromArray(
+	[1, 2, 3]);
+var _sdoomz$elm_flappy_bird$Repl$a = _elm_lang$core$Native_List.fromArray(
+	[1, 2, 3]);
+var _sdoomz$elm_flappy_bird$Repl$d_e_l_t_r_o_n_3_0_3_0 = _sdoomz$elm_flappy_bird$Repl$a;

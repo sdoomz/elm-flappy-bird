@@ -1,0 +1,13 @@
+{
+    "elm-lang/animation-frame": "1.0.0",
+    "elm-lang/virtual-dom": "1.1.1",
+    "elm-lang/mouse": "1.0.0",
+    "evancz/elm-graphics": "1.0.0",
+    "elm-lang/dom": "1.1.0",
+    "elm-lang/html": "1.1.0",
+    "elm-lang/keyboard": "1.0.0",
+    "mgold/elm-animation": "1.0.4",
+    "elm-community/easing-functions": "1.0.1",
+    "elm-lang/window": "1.0.0",
+    "elm-lang/core": "4.0.5"
+}

@@ -1,0 +1,36 @@
+var _sdoomz$elm_flappy_bird$Main$key = F2(
+	function (keycode, model) {
+		var _p0 = keycode;
+		if (_p0 === 32) {
+			return (!_elm_lang$core$Native_Utils.eq(model.state, _sdoomz$elm_flappy_bird$Model$GameOver)) ? _sdoomz$elm_flappy_bird$Actions$Jump : ((_elm_lang$core$Native_Utils.eq(model.state, _sdoomz$elm_flappy_bird$Model$GameOver) && _elm_lang$core$Native_Utils.eq(model.scoreBoard.opacity, 1)) ? _sdoomz$elm_flappy_bird$Actions$Restart : _sdoomz$elm_flappy_bird$Actions$NoOp);
+		} else {
+			return _sdoomz$elm_flappy_bird$Actions$NoOp;
+		}
+	});
+var _sdoomz$elm_flappy_bird$Main$subs = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$animation_frame$AnimationFrame$diffs(_sdoomz$elm_flappy_bird$Actions$Tick),
+				_elm_lang$keyboard$Keyboard$downs(
+				function (code) {
+					return A2(_sdoomz$elm_flappy_bird$Main$key, code, model);
+				})
+			]));
+};
+var _sdoomz$elm_flappy_bird$Main$main = {
+	main: _elm_lang$html$Html_App$program(
+		{
+			init: {ctor: '_Tuple2', _0: _sdoomz$elm_flappy_bird$Model$initial, _1: _elm_lang$core$Platform_Cmd$none},
+			update: F2(
+				function (action, model) {
+					return {
+						ctor: '_Tuple2',
+						_0: A2(_sdoomz$elm_flappy_bird$Update$update, action, model),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				}),
+			subscriptions: _sdoomz$elm_flappy_bird$Main$subs,
+			view: _sdoomz$elm_flappy_bird$View$scene
+		})
+};

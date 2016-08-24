@@ -1,0 +1,276 @@
+var _mgold$elm_animation$Animation$isStatic = function (_p0) {
+	var _p1 = _p0;
+	return _elm_lang$core$Native_Utils.eq(_p1._0.from, _p1._0.to);
+};
+var _mgold$elm_animation$Animation$isScheduled = F2(
+	function (t, _p2) {
+		var _p3 = _p2;
+		return (_elm_lang$core$Native_Utils.cmp(t, _p3._0.start + _p3._0.delay) < 1) && _elm_lang$core$Basics$not(
+			_mgold$elm_animation$Animation$isStatic(_p3));
+	});
+var _mgold$elm_animation$Animation$getTo = function (_p4) {
+	var _p5 = _p4;
+	return _p5._0.to;
+};
+var _mgold$elm_animation$Animation$getFrom = function (_p6) {
+	var _p7 = _p6;
+	return _p7._0.from;
+};
+var _mgold$elm_animation$Animation$getEase = function (_p8) {
+	var _p9 = _p8;
+	return _p9._0.ease;
+};
+var _mgold$elm_animation$Animation$getDelay = function (_p10) {
+	var _p11 = _p10;
+	return _p11._0.delay;
+};
+var _mgold$elm_animation$Animation$getStart = function (_p12) {
+	var _p13 = _p12;
+	return _p13._0.start;
+};
+var _mgold$elm_animation$Animation$timeElapsed = F2(
+	function (t, _p14) {
+		var _p15 = _p14;
+		return A2(_elm_lang$core$Basics$max, 0, t - (_p15._0.start + _p15._0.delay));
+	});
+var _mgold$elm_animation$Animation$defaultEase = function (x) {
+	return (1 - _elm_lang$core$Basics$cos(_elm_lang$core$Basics$pi * x)) / 2;
+};
+var _mgold$elm_animation$Animation$spd = F3(
+	function (dos, from, to) {
+		var _p16 = dos;
+		if (_p16.ctor === 'Duration') {
+			return _elm_lang$core$Basics$abs(to - from) / _p16._0;
+		} else {
+			return _p16._0;
+		}
+	});
+var _mgold$elm_animation$Animation$getSpeed = function (_p17) {
+	var _p18 = _p17;
+	return A3(_mgold$elm_animation$Animation$spd, _p18._0.dos, _p18._0.from, _p18._0.to);
+};
+var _mgold$elm_animation$Animation$dur = F3(
+	function (dos, from, to) {
+		var _p19 = dos;
+		if (_p19.ctor === 'Duration') {
+			return _p19._0;
+		} else {
+			return _elm_lang$core$Basics$abs(to - from) / _p19._0;
+		}
+	});
+var _mgold$elm_animation$Animation$animate = F2(
+	function (t, _p20) {
+		var _p21 = _p20;
+		var _p25 = _p21._0.to;
+		var _p24 = _p21._0.start;
+		var _p23 = _p21._0.from;
+		var duration = A3(_mgold$elm_animation$Animation$dur, _p21._0.dos, _p23, _p25);
+		var fr = A3(_elm_lang$core$Basics$clamp, 0, 1, ((t - _p24) - _p21._0.delay) / duration);
+		var eased = _p21._0.ease(fr);
+		var correction = function () {
+			var _p22 = _p21._0.ramp;
+			if (_p22.ctor === 'Nothing') {
+				return 0;
+			} else {
+				var from$ = _p22._0 * (t - _p24);
+				var eased$ = _mgold$elm_animation$Animation$defaultEase(fr);
+				return from$ - (from$ * eased$);
+			}
+		}();
+		return (_p23 + ((_p25 - _p23) * eased)) + correction;
+	});
+var _mgold$elm_animation$Animation$velocity = F2(
+	function (t, u) {
+		var forwDiff = A2(_mgold$elm_animation$Animation$animate, t + 10, u);
+		var backDiff = A2(_mgold$elm_animation$Animation$animate, t - 10, u);
+		return (forwDiff - backDiff) / 20;
+	});
+var _mgold$elm_animation$Animation$timeRemaining = F2(
+	function (t, _p26) {
+		var _p27 = _p26;
+		var duration = A3(_mgold$elm_animation$Animation$dur, _p27._0.dos, _p27._0.from, _p27._0.to);
+		return A2(_elm_lang$core$Basics$max, 0, ((_p27._0.start + _p27._0.delay) + duration) - t);
+	});
+var _mgold$elm_animation$Animation$getDuration = function (_p28) {
+	var _p29 = _p28;
+	return A3(_mgold$elm_animation$Animation$dur, _p29._0.dos, _p29._0.from, _p29._0.to);
+};
+var _mgold$elm_animation$Animation$equals = F2(
+	function (_p31, _p30) {
+		var _p32 = _p31;
+		var _p35 = _p32._0;
+		var _p33 = _p30;
+		var _p34 = _p33._0;
+		return _elm_lang$core$Native_Utils.eq(_p35.start + _p35.delay, _p34.start + _p34.delay) && (_elm_lang$core$Native_Utils.eq(_p35.from, _p34.from) && (_elm_lang$core$Native_Utils.eq(_p35.to, _p34.to) && (_elm_lang$core$Native_Utils.eq(_p35.ramp, _p34.ramp) && ((_elm_lang$core$Native_Utils.eq(_p35.dos, _p34.dos) || (_elm_lang$core$Native_Utils.cmp(
+			1.0e-3,
+			_elm_lang$core$Basics$abs(
+				A3(_mgold$elm_animation$Animation$dur, _p35.dos, _p35.from, _p35.to) - A3(_mgold$elm_animation$Animation$dur, _p34.dos, _p34.from, _p34.to))) > -1)) && A2(
+			_elm_lang$core$List$all,
+			function (t) {
+				return _elm_lang$core$Native_Utils.eq(
+					_p35.ease(t),
+					_p34.ease(t));
+			},
+			_elm_lang$core$Native_List.fromArray(
+				[0.1, 0.3, 0.7, 0.9]))))));
+	});
+var _mgold$elm_animation$Animation$isRunning = F2(
+	function (t, _p36) {
+		var _p37 = _p36;
+		var _p39 = _p37._0.start;
+		var _p38 = _p37._0.delay;
+		var duration = A3(_mgold$elm_animation$Animation$dur, _p37._0.dos, _p37._0.from, _p37._0.to);
+		return (_elm_lang$core$Native_Utils.cmp(t, _p39 + _p38) > 0) && ((_elm_lang$core$Native_Utils.cmp(t, (_p39 + _p38) + duration) < 0) && _elm_lang$core$Basics$not(
+			_mgold$elm_animation$Animation$isStatic(_p37)));
+	});
+var _mgold$elm_animation$Animation$isDone = F2(
+	function (t, _p40) {
+		var _p41 = _p40;
+		var duration = A3(_mgold$elm_animation$Animation$dur, _p41._0.dos, _p41._0.from, _p41._0.to);
+		return _mgold$elm_animation$Animation$isStatic(_p41) || (_elm_lang$core$Native_Utils.cmp(t, (_p41._0.start + _p41._0.delay) + duration) > -1);
+	});
+var _mgold$elm_animation$Animation$AnimRecord = F7(
+	function (a, b, c, d, e, f, g) {
+		return {start: a, delay: b, dos: c, ramp: d, ease: e, from: f, to: g};
+	});
+var _mgold$elm_animation$Animation$Speed = function (a) {
+	return {ctor: 'Speed', _0: a};
+};
+var _mgold$elm_animation$Animation$Duration = function (a) {
+	return {ctor: 'Duration', _0: a};
+};
+var _mgold$elm_animation$Animation$defaultDuration = _mgold$elm_animation$Animation$Duration(750 * _elm_lang$core$Time$millisecond);
+var _mgold$elm_animation$Animation$A = function (a) {
+	return {ctor: 'A', _0: a};
+};
+var _mgold$elm_animation$Animation$animation = function (t) {
+	return _mgold$elm_animation$Animation$A(
+		A7(_mgold$elm_animation$Animation$AnimRecord, t, 0, _mgold$elm_animation$Animation$defaultDuration, _elm_lang$core$Maybe$Nothing, _mgold$elm_animation$Animation$defaultEase, 0, 1));
+};
+var _mgold$elm_animation$Animation$static = function (x) {
+	return _mgold$elm_animation$Animation$A(
+		A7(_mgold$elm_animation$Animation$AnimRecord, 0, 0, _mgold$elm_animation$Animation$defaultDuration, _elm_lang$core$Maybe$Nothing, _mgold$elm_animation$Animation$defaultEase, x, x));
+};
+var _mgold$elm_animation$Animation$undo = F2(
+	function (t, _p42) {
+		var _p43 = _p42;
+		var _p44 = _p43._0;
+		return _mgold$elm_animation$Animation$A(
+			_elm_lang$core$Native_Utils.update(
+				_p44,
+				{
+					from: _p44.to,
+					to: _p44.from,
+					start: t,
+					delay: 0 - A2(_mgold$elm_animation$Animation$timeRemaining, t, _p43),
+					ramp: _elm_lang$core$Maybe$Nothing,
+					ease: function (t) {
+						return 1 - _p44.ease(1 - t);
+					}
+				}));
+	});
+var _mgold$elm_animation$Animation$retarget = F3(
+	function (t, newTo, _p45) {
+		var _p46 = _p45;
+		var _p49 = _p46;
+		var _p48 = _p46._0;
+		if (_elm_lang$core$Native_Utils.eq(newTo, _p48.to)) {
+			return _p49;
+		} else {
+			if (_mgold$elm_animation$Animation$isStatic(_p49)) {
+				return _mgold$elm_animation$Animation$A(
+					_elm_lang$core$Native_Utils.update(
+						_p48,
+						{start: t, to: newTo, ramp: _elm_lang$core$Maybe$Nothing}));
+			} else {
+				if (A2(_mgold$elm_animation$Animation$isScheduled, t, _p49)) {
+					return _mgold$elm_animation$Animation$A(
+						_elm_lang$core$Native_Utils.update(
+							_p48,
+							{to: newTo, ramp: _elm_lang$core$Maybe$Nothing}));
+				} else {
+					if (A2(_mgold$elm_animation$Animation$isDone, t, _p49)) {
+						return _mgold$elm_animation$Animation$A(
+							_elm_lang$core$Native_Utils.update(
+								_p48,
+								{start: t, delay: 0, from: _p48.to, to: newTo, ramp: _elm_lang$core$Maybe$Nothing}));
+					} else {
+						var newSpeed = function () {
+							var _p47 = _p48.dos;
+							if (_p47.ctor === 'Speed') {
+								return _p48.dos;
+							} else {
+								return _mgold$elm_animation$Animation$Speed(
+									A3(_mgold$elm_animation$Animation$spd, _p48.dos, _p48.from, _p48.to));
+							}
+						}();
+						var pos = A2(_mgold$elm_animation$Animation$animate, t, _p49);
+						var vel = A2(_mgold$elm_animation$Animation$velocity, t, _p49);
+						return _mgold$elm_animation$Animation$A(
+							A7(
+								_mgold$elm_animation$Animation$AnimRecord,
+								t,
+								0,
+								newSpeed,
+								_elm_lang$core$Maybe$Just(vel),
+								_p48.ease,
+								pos,
+								newTo));
+					}
+				}
+			}
+		}
+	});
+var _mgold$elm_animation$Animation$duration = F2(
+	function (x, _p50) {
+		var _p51 = _p50;
+		return _mgold$elm_animation$Animation$A(
+			_elm_lang$core$Native_Utils.update(
+				_p51._0,
+				{
+					dos: _mgold$elm_animation$Animation$Duration(x)
+				}));
+	});
+var _mgold$elm_animation$Animation$speed = F2(
+	function (x, _p52) {
+		var _p53 = _p52;
+		return _mgold$elm_animation$Animation$A(
+			_elm_lang$core$Native_Utils.update(
+				_p53._0,
+				{
+					dos: _mgold$elm_animation$Animation$Speed(
+						_elm_lang$core$Basics$abs(x))
+				}));
+	});
+var _mgold$elm_animation$Animation$delay = F2(
+	function (x, _p54) {
+		var _p55 = _p54;
+		return _mgold$elm_animation$Animation$A(
+			_elm_lang$core$Native_Utils.update(
+				_p55._0,
+				{delay: x}));
+	});
+var _mgold$elm_animation$Animation$ease = F2(
+	function (x, _p56) {
+		var _p57 = _p56;
+		return _mgold$elm_animation$Animation$A(
+			_elm_lang$core$Native_Utils.update(
+				_p57._0,
+				{ease: x}));
+	});
+var _mgold$elm_animation$Animation$from = F2(
+	function (x, _p58) {
+		var _p59 = _p58;
+		return _mgold$elm_animation$Animation$A(
+			_elm_lang$core$Native_Utils.update(
+				_p59._0,
+				{from: x, ramp: _elm_lang$core$Maybe$Nothing}));
+	});
+var _mgold$elm_animation$Animation$to = F2(
+	function (x, _p60) {
+		var _p61 = _p60;
+		return _mgold$elm_animation$Animation$A(
+			_elm_lang$core$Native_Utils.update(
+				_p61._0,
+				{to: x, ramp: _elm_lang$core$Maybe$Nothing}));
+	});

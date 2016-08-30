@@ -1,6 +1,0 @@
-var _sdoomz$elm_flappy_bird$Actions$NoOp = {ctor: 'NoOp'};
-var _sdoomz$elm_flappy_bird$Actions$Restart = {ctor: 'Restart'};
-var _sdoomz$elm_flappy_bird$Actions$Jump = {ctor: 'Jump'};
-var _sdoomz$elm_flappy_bird$Actions$Tick = function (a) {
-	return {ctor: 'Tick', _0: a};
-};

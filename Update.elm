@@ -158,10 +158,7 @@ incrementScore scoreBoard model =
 checkCollisions : Model -> Model
 checkCollisions model =
   if model.state /= GameOver && ( model.y <= -275 || (model.pipes |> List.map (\(f, s) -> [f, s]) |> List.concat |> List.any (\p -> hasCollision p model )) ) then
-    let
-       model' = calculateFinalScore model
-    in
-      { model' | state = GameOver }
+    { model | state = GameOver } |> calculateFinalScore
   else
     model
 
